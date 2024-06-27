@@ -17,3 +17,31 @@ Aggiungere un secondo campo al form che permetta di filtrare gli hotel per voto 
 NOTA:
 deve essere possibile utilizzare entrambi i filtri contemporaneamente (es. ottenere una lista con hotel che dispongono di parcheggio e
 che hanno un voto di tre stelle o superiore) Se non viene specificato nessun filtro, visualizzare come in precedenza tutti gli hotel.
+
+html
+
+<form action='./index.php' action='GET'>
+    <inpout type='checkbox' name='hasParking' />
+    <inpout type='text' name='pippo' />
+    <submit>
+</form>
+
+index.php
+
+$_GET --> array
+
+$_GET['pippo'] --> contiene il valore dell'input
+$_GET['hasParking'] --> true/false --- 1/0 --- 
+
+var_dump($_GET)
+
+ <!-- <?php 
+                    if($hotel['parking'] === true ){
+                        echo $hotel['name'];
+                    }
+                    
+                    ?> -->
+        </section>
+
+
+
