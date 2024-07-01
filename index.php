@@ -36,6 +36,44 @@
             'distance_to_center' => 50
         ],
     ];
+//     <?php 
+//     if($_GET['parking'] === 1){
+//         echo $hotel['name'];
+//     }elseif($_GET['parking'] === 0 ){
+//         echo $hotel['name'];
+//     }
+    
+    $filteredHotels = $hotels;
+
+    if(isset($_GET['parking'])){
+        $parking = $_GET['parking'];
+        
+        if($parking == 1){
+            $tempArray=[];
+
+            foreach ($filteredHotels as $hotel){
+                if($hotel['parking'] === true){
+                    $tempArray[]=$hotel;
+                }
+            }
+            $filteredHotels = $tempArray;
+        }
+    }
+
+    if(isset($_GET['stars'])){
+        $stars = $_GET['stars'];
+        
+        if($stars >= 1 && $stars <= 5){
+            $tempArray=[];
+
+            foreach ($filteredHotels as $hotel){
+                if($hotel['vote'] >= $stars){
+                    $tempArray[]=$hotel;
+                }
+            }
+            $filteredHotels = $tempArray;
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -49,6 +87,24 @@
 </head>
 <body>
     <main class="p-4">
+        <section class="d-flex">
+            <div class="col-6">
+                <form action='./index.php' action='GET'>
+                    <div class="mb-3 form-check">
+                        <label class="form-check-label" id="parking" for="exampleCheck1"> con parchegio ?</label>
+                        <select name="parking" id="parking">
+                            <option value="" selected >No</option>
+                            <option value="1">Si</option>
+                        </select> 
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+            <div class="col-6">
+                <label for="stars"> seleziona il numero di stelle</label>
+                <input type="number" name="stars" id="stars" min="1" max="5" required>
+            </div>
+        </section>
         <section>
             <table class="table">
                 <thead>
@@ -61,7 +117,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach($hotels as $hotel ) {?>
+                    <?php foreach($filteredHotels as $hotel ) {?>
                     <tr>
                         <th scope="row"><?php echo $hotel['name']  ?></th>
                         <td><?php echo $hotel['description']  ?></td>
@@ -73,23 +129,6 @@
                 </tbody>
             </table>
         </section>
-        <form action='./index.php' action='GET'>
-            <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" name="parking" id="parking" />
-                <label class="form-check-label" id="parking" for="exampleCheck1">con parchegio</label>
-            </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
-            
-            <?php var_dump($_GET)?>
-        </form>
-        <?php 
-            if($_GET['parking'] === 1){
-                echo $hotel['name'];
-            }elseif($_GET['parking'] === 0 ){
-                echo $hotel['name'];
-            }
-            
-        ?>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </body>
